@@ -7,7 +7,7 @@
             BankAccount account1 = new BankAccount("Yana",100000000000);
             BankAccount account2 = new BankAccount("Lena", 100);
             Console.WriteLine
-                ($"account: {account1.Owner} {account1.Balance} {account1.Number}");
+                ($"account:  {account1.Owner} {account1.Balance} {account1.Number}");
             Console.WriteLine
                 ($"account: {account2.Owner} {account2.Balance} {account2.Number}");
             
