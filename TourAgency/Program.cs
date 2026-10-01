@@ -6,7 +6,7 @@
         {
             Console.WriteLine("Выберите источник данных:");
             Console.WriteLine("1 — InMemoryRepository");
-            Console.WriteLine("2 — CsvRepository (папка data)");
+            Console.WriteLine("2 — CsvRepository (папка data )");
             Console.Write("Ваш выбор: ");
 
             int choice;
