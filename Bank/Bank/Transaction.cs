@@ -1,18 +1,10 @@
 ﻿namespace Bank;
-// мы создали благодаря record неизменяемый тип данных
-internal record Transaction(decimal Amount, DateTime Date, string Note);
+/// <summary>
+/// Тип данных, который запрещает менять состояние объекта
+/// </summary>
+/// <param name="Amount">Сумма транзакции</param>
+/// <param name="Date">Дата транзакции</param>
+/// <param name="Note">Заметка транзакции</param>
+public record Transaction(decimal Amount, DateTime Date, string Note);
 
-
-//internal record Transaction
-//{
-//    public decimal Amount { get; }
-//    public DateTime Date { get; }
-//    public string Note { get; }
-//    public Transaction(decimal Amount, DateTime Date, string Note)
-//    {
-//        this.Note = Note;
-//        this.Amount = Amount;
-//        this.Date = Date;
-//    }
-//}
 

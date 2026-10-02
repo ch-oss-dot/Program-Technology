@@ -4,31 +4,49 @@
     {
         static void Main(string[] args)
         {
-            BankAccount account1 = new BankAccount("Yana",100000000000);
+            BankAccount account1 = new BankAccount("Yana", 10000000);
             BankAccount account2 = new BankAccount("Lena", 100);
-            Console.WriteLine
-                ($"account:  {account1.Owner} {account1.Balance} {account1.Number}");
-            Console.WriteLine
-                ($"account: {account2.Owner} {account2.Balance} {account2.Number}");
-            
-            account1.MakeDeposit(1000, DateTime.UtcNow, ":)");
-            Console.WriteLine(account1.Balance);
-            
-            account1.MakeWithdrawal(100, DateTime.UtcNow, ":(");
-            Console.WriteLine(account1.Balance);
 
-            
+            Console.WriteLine($" {account1.Owner} {account1.Balance} {account1.Number}");
+            Console.WriteLine($" {account2.Owner} {account2.Balance} {account2.Number}");
+            account1.MakeDeposite(12000, DateTime.UtcNow, ";)");
+            Console.WriteLine($"Balance:  {account1.Balance}");
+            account1.MakeWithdrawal(123, DateTime.UtcNow, ":(");
+            Console.WriteLine($"Balance: {account1.Balance}");
             Console.WriteLine(account1.GetAccountHistory());
-
             try
             {
-                account2.MakeWithdrawal(1000, DateTime.UtcNow, "&&&");
-                Console.WriteLine(account2.Balance);
+                account2.MakeWithdrawal(10000, DateTime.UtcNow, "asdas");
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
                 Console.WriteLine(e.Message);
             }
+
+            InterestEarningAccount interest = new InterestEarningAccount("Mimi", 1000);
+            interest.PerformMonthAndTransactions();
+            Console.WriteLine(interest.GetAccountHistory());
+
+            LineOfCreditAccount lineOfCredit = new LineOfCreditAccount("Mimi", 0, 1000m);
+            lineOfCredit.MakeWithdrawal(500m, DateTime.UtcNow, "credit");
+            GiftCartAccount giftcart = new GiftCartAccount("Mimi", 1000m, 5000m);
+
+
+            List<BankAccount> accounts = new List<BankAccount>();
+            accounts.Add(account1);
+            accounts.Add(interest);
+            accounts.Add(lineOfCredit);
+            accounts.Add(giftcart);
+
+            foreach (BankAccount account in accounts)
+            {
+                Console.WriteLine(account);    // == Console.WriteLine(account.ToString());
+                account.PerformMonthAndTransactions();
+                Console.WriteLine(account.GetAccountHistory());
+            }
+            lineOfCredit.MakeWithdrawal(600m, DateTime.UtcNow, "credit");
+            Console.WriteLine(lineOfCredit.GetAccountHistory());
         }
     }
 }
+
