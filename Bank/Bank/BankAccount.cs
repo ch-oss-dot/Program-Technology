@@ -78,6 +78,7 @@ public class BankAccount
     {
         return $"Owner: {Owner}\taccount number: {Number} (тип счёта {GetType()}";
     }
+
     /// <summary>
     /// Пополняет счёт на указанную сумму.
     /// </summary>
