@@ -44,8 +44,20 @@
             }
 
             lineOfCredit.MakeWithdrawal(600m, DateTime.UtcNow, "credit");
-            Console.WriteLine(lineOfCredit.GetAccountHistory);
-                
+            Console.WriteLine(lineOfCredit.GetAccountHistory());
+
+
+            //// Проверка перевода
+            //var transfer = new TransferService();
+            //var acc1 = new BankAccount("Алиса", 10000);
+            //var acc2 = new BankAccount("Боб", 5000);
+
+            //Console.WriteLine("До перевода: Алиса=" + acc1.Balance + ", Боб=" + acc2.Balance);
+
+            //transfer.Transfer(acc1, acc2, 3000m, DateTime.UtcNow);
+
+            //Console.WriteLine("После перевода: Алиса=" + acc1.Balance + ", Боб=" + acc2.Balance);
+            //// Алиса=7000, Боб=8000
         }
     }
 }
