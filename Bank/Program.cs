@@ -46,7 +46,6 @@
             lineOfCredit.MakeWithdrawal(600m, DateTime.UtcNow, "credit");
             Console.WriteLine(lineOfCredit.GetAccountHistory());
 
-
             //// Проверка перевода
             //var transfer = new TransferService();
             //var acc1 = new BankAccount("Алиса", 10000);
