@@ -1,6 +1,9 @@
-﻿using ConstructionTechnique;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using ConstructionTechnique;
 
-namespace ConstructionFleet;
+namespace ConstructionTechnique;
 
 /// <summary>
 /// Экскаватор — строительная техника, которая копает.
