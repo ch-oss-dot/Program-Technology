@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConstructionFleet;
+namespace ConstructionTechnique;
 
 /// <summary>
 /// Тип строительной техники.

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConstructionFleet;
+namespace ConstructionTechnique;
 
 /// <summary>
 /// Интерфейс для техники, которая умеет поднимать грузы

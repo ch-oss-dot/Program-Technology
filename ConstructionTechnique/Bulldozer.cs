@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConstructionFleet;
+namespace ConstructionTechnique;
 
 /// <summary>
 /// Бульдозер — строительная техника, которая разравнивает и поднимает грунт.
