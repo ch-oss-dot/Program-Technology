@@ -42,7 +42,7 @@ public abstract class ConstructionVehicle
     /// <summary>
     /// Создаёт технику только с моделью, остальные параметры — по умолчанию.
     /// </summary>
-    public ConstructionVehicle(string model) : this("N/A", model, 0, 0)
+    public ConstructionVehicle(string model) : this("нет данных", model, 0, 0)
     {
     }
 
