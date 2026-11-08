@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="GuessTheNumber.Console/GuessTheNumber.Console.csproj" />
+    <Project Path="GuessTheNumber.Core/GuessTheNumber.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+</Solution>
