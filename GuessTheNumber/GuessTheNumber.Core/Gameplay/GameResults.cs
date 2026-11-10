@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace GuessTheNumber.Core.Gameplay;
 
-namespace GuessTheNumber.Core.Gameplay
+public enum GameResult
 {
-    internal class GameResults
-    {
-    }
+    TooLow,
+    TooHigh,
+    Win,
+    OutOfAttempts
 }
