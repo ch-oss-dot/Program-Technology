@@ -1,47 +1,55 @@
-﻿using GuessTheNumber.Core.GameSettings;
+﻿using System;
+using GuessTheNumber.Core.GameSettings;
 using GuessTheNumber.Core.Randomization;
 
-namespace GuessTheNumber.Core.Gameplay
+namespace GuessTheNumber.Core.Gameplay;
+
+public class GameSession
 {
-    public class GameSession
+    private readonly DifficultyLevel _settings;
+    private readonly int _secretNumber;
+
+    public int CurrentAttempt { get; private set; }
+    public bool IsGameOver { get; private set; }
+
+    // ТО САМОЕ СОБЫТИЕ (требование задания)
+    public event Action<GameEvent>? OnGameEvent;
+
+    public GameSession(DifficultyLevel settings, ISecretNumberGenerator generator)
     {
-        private readonly DifficultyLevel _settings;
-        private readonly int _secretNumber;
+        _settings = settings;
+        _secretNumber = generator.Generate(settings.MinValue, settings.MaxValue);
+        CurrentAttempt = 0;
+        IsGameOver = false;
+    }
 
-        public int CurrentAttempt { get; private set; }
-        public bool IsGameOver { get; private set; }
+    public void MakeGuess(int userNumber)
+    {
+        if (IsGameOver) return;
 
-        public GameSession(DifficultyLevel settings, ISecretNumberGenerator generator)
+        CurrentAttempt++;
+
+        if (userNumber == _secretNumber)
         {
-            _settings = settings;
-            _secretNumber = generator.Generate(settings.MinValue, settings.MaxValue);
-            CurrentAttempt = 0;
-            IsGameOver = false;
+            IsGameOver = true;
+            // Уведомляем подписчиков о победе
+            OnGameEvent?.Invoke(new GameWonEvent(userNumber, CurrentAttempt));
         }
-
-        public GameResult MakeGuess(int userNumber)
+        else if (CurrentAttempt >= _settings.MaxAttempts)
         {
-            // Если игра уже закончена, ничего не делаем
-            if (IsGameOver) return GameResult.Win; 
-
-            CurrentAttempt++;
-
-            // Проверка на победу
-            if (userNumber == _secretNumber)
-            {
-                IsGameOver = true;
-                return GameResult.Win;
-            }
-
-            // Проверка на проигрыш (закончились попытки)
-            if (CurrentAttempt >= _settings.MaxAttempts)
-            {
-                IsGameOver = true;
-                return GameResult.OutOfAttempts;
-            }
-
-            // Подсказки
-            return userNumber < _secretNumber ? GameResult.TooLow : GameResult.TooHigh;
+            IsGameOver = true;
+            // Уведомляем подписчиков о проигрыше
+            OnGameEvent?.Invoke(new GameLostEvent(_secretNumber, CurrentAttempt));
+        }
+        else if (userNumber < _secretNumber)
+        {
+            // Уведомляем, что число меньше
+            OnGameEvent?.Invoke(new TooLowEvent(userNumber));
+        }
+        else
+        {
+            // Уведомляем, что число больше
+            OnGameEvent?.Invoke(new TooHighEvent(userNumber));
         }
     }
 }

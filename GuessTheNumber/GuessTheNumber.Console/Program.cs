@@ -10,11 +10,11 @@ internal class Program
     static void Main(string[] args)
     {
         var generator = new RandomSecretNumberGenerator();
-
-        // Выбираем сложность
         DifficultyLevel settings = ChooseDifficulty();
-
         var session = new GameSession(settings, generator);
+
+        // ПОДПИСЫВАЕМСЯ НА СОБЫТИЯ
+        session.OnGameEvent += HandleGameEvent;
 
         System.Console.WriteLine($"\nВыбран уровень: {settings.Name}");
         System.Console.WriteLine($"Угадайте число от {settings.MinValue} до {settings.MaxValue}. У вас {settings.MaxAttempts} попыток.");
@@ -25,23 +25,7 @@ internal class Program
 
             if (int.TryParse(System.Console.ReadLine(), out int guess))
             {
-                var result = session.MakeGuess(guess);
-
-                switch (result)
-                {
-                    case GameResult.TooLow:
-                        System.Console.WriteLine("Ваше число меньше.");
-                        break;
-                    case GameResult.TooHigh:
-                        System.Console.WriteLine("Ваше число больше.");
-                        break;
-                    case GameResult.Win:
-                        System.Console.WriteLine($" Неплохо! Вы угадали за {session.CurrentAttempt} попыток.");
-                        break;
-                    case GameResult.OutOfAttempts:
-                        System.Console.WriteLine("Ты тупой! Попытки закончились.");
-                        break;
-                }
+                session.MakeGuess(guess); // Логика сама вызовет нужное событие
             }
             else
             {
@@ -50,7 +34,27 @@ internal class Program
         }
     }
 
-    // Меню выбора сложности
+    // Обработчик событий
+    static void HandleGameEvent(GameEvent e)
+    {
+        // В зависимости от того, какое событие пришло, выводим текст
+        switch (e)
+        {
+            case TooLowEvent:
+                System.Console.WriteLine("Ваше число меньше.");
+                break;
+            case TooHighEvent:
+                System.Console.WriteLine("Ваше число больше.");
+                break;
+            case GameWonEvent won:
+                System.Console.WriteLine($"Победа! Вы угадали за {won.AttemptsUsed} попыток.");
+                break;
+            case GameLostEvent lost:
+                System.Console.WriteLine($"Вы проиграли! Загаданное число было: {lost.SecretNumber}.");
+                break;
+        }
+    }
+
     static DifficultyLevel ChooseDifficulty()
     {
         System.Console.WriteLine("Выберите уровень сложности:");
@@ -68,13 +72,10 @@ internal class Program
             case "2": return DifficultyLevel.Normal;
             case "3": return DifficultyLevel.Hard;
             case "4": return CreateCustomLevel();
-            default:
-                System.Console.WriteLine("Неверный выбор. Выбран обычный уровень.");
-                return DifficultyLevel.Normal;
+            default: return DifficultyLevel.Normal;
         }
     }
 
-    // Создание пользовательских настроек
     static DifficultyLevel CreateCustomLevel()
     {
         System.Console.Write("Введите минимальное число: ");
